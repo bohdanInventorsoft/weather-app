@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { HistoryEntry, useHistory } from '@contexts/HistoryProvider'
+import { useHistory } from '@contexts/HistoryProvider'
 import moment from 'moment'
 import { BsTrash } from 'react-icons/bs'
 import { CiUndo } from 'react-icons/ci'
@@ -8,6 +8,7 @@ import { ActionType } from '@state/actions'
 import { AiOutlineClose } from 'react-icons/ai'
 import Typo from '@ui/Typo'
 import Card from '@ui/Card'
+import { HistoryEntry } from '@models/History'
 
 export const HistoryBoard = () => {
   const { history, removedHistory, remove, undoRemove } = useHistory()

@@ -12,3 +12,6 @@ yarn dev
 # or
 pnpm dev
 ```
+
+## Requirements
+Node JS (version 18 or higher)

@@ -1,13 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
-import { useMount, useUpdate, useUpdateEffect } from 'react-use'
-
-export type HistoryEntry = {
-  id: string;
-  timestamp: number;
-  city: string;
-  country: string;
-};
-
+import { useMount, useUpdateEffect } from 'react-use'
+import { HistoryEntry } from '@models/History'
 export const HistoryContext = createContext<{
   history: Array<HistoryEntry>;
   removedHistory: HistoryEntry[];
