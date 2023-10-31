@@ -15,3 +15,5 @@ pnpm dev
 
 ## Requirements
 Node JS (version 18 or higher)
+
+You have to create [`OPEN_WEATHER_API_KEY`](https://home.openweathermap.org/api_keys) inside your .env file
