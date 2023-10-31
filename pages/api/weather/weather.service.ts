@@ -21,7 +21,7 @@ export const getCitiesWeather = async (city: string, country: string) => {
     params.append('q', `${city}`)
     params.append('units', 'metric')
     params.append('appid', process.env.OPEN_WEATHER_API_KEY as string)
-
+    console.log(city, country, '===')
     const resp = await fetch(`${url}?${params.toString()}`)
 
     if (resp.status === 200) {

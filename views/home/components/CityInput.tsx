@@ -5,11 +5,13 @@ import Typo from '@ui/Typo'
 import WeatherService from '@services/WeatherService'
 import { Input } from '@ui/Input'
 import Card from '@ui/Card'
+import { useHistory } from '@contexts/HistoryProvider'
 export const CityInput = ({ onChange }: { onChange: (val: { name: string; country: string }) => void }) => {
   const [search, setSearch] = useState('')
   const [citiesList, setCities] = useState<Array<City>>([])
   const [loading, setLoading] = useState(false)
   const [show, setShow] = useState(false)
+  const { history, removedHistory} = useHistory()
   const ref = useRef(null)
   useClickAway(ref, () => {
     setShow(false)
@@ -34,10 +36,10 @@ export const CityInput = ({ onChange }: { onChange: (val: { name: string; countr
       }
       pull()
     },
-    250,
+    500,
     [search]
   )
-
+  console.log(history, removedHistory)
   const selectCity = (name: string, country: string) => {
     onChange({ name, country })
     setSearch('')
@@ -61,8 +63,9 @@ export const CityInput = ({ onChange }: { onChange: (val: { name: string; countr
       {show ? (
         <Card
           className={
-            'absolute w-full bottom-0 left-0 border border-[#23292c] bg-[#080e12] px-2 translate-y-full rounded-lg'
+            'absolute w-full bottom-0 left-0 border border-[#23292c] bg-[#080e12] px-2 translate-y-full'
           }
+          borderRadius={'rounded-none'}
           variant={'grey1'}
         >
           <div className={'w-full h-full'} ref={ref}>

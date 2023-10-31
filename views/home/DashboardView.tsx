@@ -1,10 +1,10 @@
 import React from 'react'
 import { CityInput } from '@views/home/components/CityInput'
-import WeatherInfo from '@ui/WeatherInfo'
 import { HistoryBoard } from '@views/home/components/HistoryBoard'
 import { useStateContext } from '@state/store'
 import useCitiesWeather from '@fetchers/useCitiesWeather'
 import { ActionType } from '@state/actions'
+import WeatherInfo from '@views/home/components/WeatherInfo'
 
 const DashboardView = () => {
   const [weatherForecast, dispatch] = useStateContext((store) => store.weatherForecast)

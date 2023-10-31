@@ -44,9 +44,10 @@ export function HistoryProviderWrapper({ children }: { children: React.ReactNode
     updateStorage(history)
   }, [history])
   const add = (key: string, value: HistoryEntry) => {
-    const itemExists = history.some((entry) => entry.id === key);
+    const itemExistsInHistory = history.some((entry) => entry.id === key);
+    const itemExistsInRemove = removedHistory.some((entry) => entry.id === key);
 
-    if (!itemExists) {
+    if (!itemExistsInHistory && !itemExistsInRemove) {
       setHistory([...history, value]);
     }
   };

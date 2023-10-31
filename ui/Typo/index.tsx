@@ -15,8 +15,8 @@ const FONT_WEIGHTS: { [variant in TYPO_WEIGHTS]: string } = {
 }
 
 const TYPO_VARIANTS: { [variant in COLOR]: string } = {
-  white: 'dark:text-white',
-  grey: 'dark:text-grey',
+  white: 'text-white',
+  grey: 'text-grey',
 }
 
 interface BaseTypoI {

@@ -5,7 +5,7 @@ export type CardVariantsI = 'grey1' | 'tertiaryAqua' | 'darkgrey'
 const VARIANTS: { [variant in CardVariantsI]: string } = {
   grey1: 'bg-grey1',
   darkgrey: 'bg-darkgrey',
-  tertiaryAqua: 'bg-tertiaryAqua',
+  tertiaryAqua: 'bg-tertiaryAqua border border-grey1',
 }
 
 interface CardI {

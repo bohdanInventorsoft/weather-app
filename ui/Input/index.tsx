@@ -25,20 +25,18 @@ interface InputTypes extends InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean
   id?: string
   inputClasses?: string
-  rounded?: string
 }
 
 export const Input = memo(function Input({
   className,
   inputClasses,
   inputSize = 'lg',
-  rounded = 'rounded-lg',
   variant = 'primary',
   ...props
 }: InputTypes) {
   return (
     <div
-      className={`flex items-center gap-2 ${rounded} focus:outline-none ${COLORS[variant]} ${SIZES[inputSize]}  ${className} `}
+      className={`flex items-center gap-2 focus:outline-none ${COLORS[variant]} ${SIZES[inputSize]}  ${className} `}
       role="textbox"
       tabIndex={1}
     >
