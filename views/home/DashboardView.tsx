@@ -5,12 +5,13 @@ import { useStateContext } from '@state/store'
 import useCitiesWeather from '@fetchers/useCitiesWeather'
 import { ActionType } from '@state/actions'
 import WeatherInfo from '@views/home/components/WeatherInfo'
+import { City } from '@models/City'
 
 const DashboardView = () => {
   const [weatherForecast, dispatch] = useStateContext((store) => store.weatherForecast)
   useCitiesWeather()
-  const setCurrentCity = (val: { name: string; country: string }) => {
-    dispatch({ type: ActionType.SELECT_CITY, payload: val })
+  const setCurrentCity = (c:City) => {
+    dispatch({ type: ActionType.SELECT_CITY, payload: c })
   }
 
   return (

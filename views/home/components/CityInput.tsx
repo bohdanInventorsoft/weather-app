@@ -2,11 +2,11 @@ import { useClickAway, useDebounce } from 'react-use'
 import { useRef, useState } from 'react'
 import { City } from '@models/City'
 import Typo from '@ui/Typo'
-import WeatherService from '@services/WeatherService'
+import WeatherService from '@services/weather'
 import { Input } from '@ui/Input'
 import Card from '@ui/Card'
 import { useHistory } from '@contexts/HistoryProvider'
-export const CityInput = ({ onChange }: { onChange: (val: { name: string; country: string }) => void }) => {
+export const CityInput = ({ onChange }: { onChange: (val:City) => void }) => {
   const [search, setSearch] = useState('')
   const [citiesList, setCities] = useState<Array<City>>([])
   const [loading, setLoading] = useState(false)
@@ -24,8 +24,12 @@ export const CityInput = ({ onChange }: { onChange: (val: { name: string; countr
         try {
           if (search) {
             const resp = await WeatherService.getCities(search, 10)
-            setCities(resp)
-            setShow(true)
+            if(resp.status === 200) {
+              const data = await resp.json()
+              setCities(data)
+              setShow(true)
+            }
+
           } else {
             setCities([])
           }
@@ -39,11 +43,6 @@ export const CityInput = ({ onChange }: { onChange: (val: { name: string; countr
     500,
     [search]
   )
-  console.log(history, removedHistory)
-  const selectCity = (name: string, country: string) => {
-    onChange({ name, country })
-    setSearch('')
-  }
 
   return (
     <div className={'flex relative w-full h-fit'}>
@@ -74,11 +73,16 @@ export const CityInput = ({ onChange }: { onChange: (val: { name: string; countr
               ? citiesList?.map((city) => (
                   <div
                     className={'flex items-center gap-1 text-white h-9 cursor-pointer'}
-                    key={city.id}
-                    onClick={() => selectCity(city.name, city.country)}
+                    key={`${city.lat} + ${city.lon}`}
+                    onClick={() => {
+                      onChange(city)
+                      setSearch('')
+                    }
+                  }
                   >
-                    <Typo variant={'grey'}>{city.name}</Typo>
-                    <Typo variant={'grey'}>({city.country})</Typo>
+                    <Typo variant={'grey'}>{city.name},</Typo>
+                    <Typo variant={'grey'}>{city.state}</Typo>
+                    <Typo variant={'grey'}>{city.country}</Typo>
                   </div>
                 ))
               : null}

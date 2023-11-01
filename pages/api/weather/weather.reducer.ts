@@ -1,4 +1,7 @@
-import { findCitiesByString, getCitiesWeather } from '@/pages/api/weather/weather.service'
+import {
+  getCities,
+  getCitiesWeather,
+} from '@/pages/api/weather/weather.service'
 import { ApiReducer, ApiRequestI, ApiResponse } from '@/models/Api'
 export enum WeatherActions {
   GET_CITIES = 'GET_CITIES',
@@ -14,9 +17,9 @@ export class WeatherReducer extends ApiReducer<WeatherActions> {
 
     switch (post.action) {
       case WeatherActions.GET_CITIES:
-        return await findCitiesByString(payload.name, payload.limit)
+        return await getCities(payload.name)
       case WeatherActions.GET_WEATHER:
-        return await getCitiesWeather(payload.name, payload.country)
+        return await getCitiesWeather(payload)
     }
 
     return Promise.reject({ status: 400, text: 'No action' })

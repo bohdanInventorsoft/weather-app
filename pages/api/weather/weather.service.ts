@@ -1,33 +1,18 @@
-import fs from 'fs'
-import path from 'path'
 import { OpenWeatherResponseI } from '@/models/OpenWeatherResponseI'
-import { City } from '@/models/City'
-export const findCitiesByString = async (name: string, limit: number) => {
-  const filePath = path.join(process.cwd(), './db', 'indexedCIties.json')
-  const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
 
-  const citiesRes = jsonData[name[0].toLowerCase()]?.filter((city: City) => {
-    const temp = city.name.toLowerCase()
-    return temp.indexOf(name.toLowerCase()) > -1
-  })
-
-  return Promise.resolve({ status: 200, body: citiesRes ? citiesRes.slice(0, limit) : [] })
-}
-
-export const getCitiesWeather = async (city: string, country: string) => {
+export const getCitiesWeather = async ({ name, country, state}:{ country: string, state:string, name: string}) => {
   try {
-    const url = 'https://api.openweathermap.org/data/2.5/weather'
+    const url = `https://api.openweathermap.org/data/2.5/weather`
     const params = new URLSearchParams()
-    params.append('q', `${city}`)
+    params.append('q', `${name},${state},${country}`)
     params.append('units', 'metric')
     params.append('appid', process.env.OPEN_WEATHER_API_KEY as string)
 
     const resp = await fetch(`${url}?${params.toString()}`)
-
     if (resp.status === 200) {
-      const data = (await resp.json()) as OpenWeatherResponseI
+      const data = await resp.json() as OpenWeatherResponseI
       const serialized = {
-        name: city,
+        name: data.name,
         temp: data.main.temp,
         tempMin: data.main.temp_min,
         tempMax: data.main.temp_max,
@@ -38,9 +23,33 @@ export const getCitiesWeather = async (city: string, country: string) => {
 
       return { status: 200, body: serialized }
     }
-    return { status: 400, message: 'Something went wrong' }
-  } catch (err) {
+    return { status: resp.status, statusText: resp.statusText}
+  } catch(err:any) {
     console.log('getCitiesWeather', err)
-    return { status: 500, message: 'Something went wrong' }
+    return { status: 500, statusText: 'Something went wrong'}
+  }
+
+}
+
+export const getCities = async (city:string) => {
+  try {
+    const url2 = `http://api.openweathermap.org/geo/1.0/direct`
+    const params2 = new URLSearchParams()
+    params2.append('q', `${city}`)
+    params2.append('limit', "10")
+    params2.append('appid', process.env.OPEN_WEATHER_API_KEY as string)
+
+    const resp2 = await fetch(`${url2}?${params2.toString()}`)
+
+    if(resp2.status === 200) {
+      const data = await resp2.json()
+      return { status: 200, body: data }
+    }
+    return {status: resp2.status, statusText: resp2.statusText}
+  }
+  catch(err:any) {
+    console.log('getCities', err)
+    return {status: 500, statusText: 'Something went wrong'}
   }
 }
+

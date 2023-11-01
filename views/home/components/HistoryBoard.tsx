@@ -55,7 +55,7 @@ const HistoryItem = ({ city, country, timestamp, id }: HistoryEntry) => {
   const [, dispatch] = useStateContext((store) => store.selectedCity)
   const isRemoved = removedHistory.findIndex((h) => h.id === id) > -1
   const selectCity = () => {
-    dispatch({ type: ActionType.SELECT_CITY, payload: { country, name: city } })
+    dispatch({ type: ActionType.SELECT_CITY, payload: city })
   }
 
   const handleUndoRemove = (e: any) => {
@@ -75,7 +75,7 @@ const HistoryItem = ({ city, country, timestamp, id }: HistoryEntry) => {
 
   return (
     <tr className={'cursor-pointer'} onClick={selectCity}>
-      <td className={'px-2 border border-grey1'}>{city}</td>
+      <td className={'px-2 border border-grey1'}>{city.name}</td>
       <td className={'px-2 border border-grey1'}>{country}</td>
       <td className={'px-2 border border-grey1'}>{moment(timestamp).format('MM/DD hh:mm')}</td>
       <td className={'px-2 border border-grey1'}>

@@ -1,6 +1,8 @@
+import { City } from '@models/City'
+
 export type HistoryEntry = {
   id: string;
   timestamp: number;
-  city: string;
+  city: City;
   country: string;
 };

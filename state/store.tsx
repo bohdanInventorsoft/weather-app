@@ -2,10 +2,11 @@ import { createContext, useCallback, useContext, useRef, useSyncExternalStore } 
 import { WeatherI } from '@/models/WeatherI'
 import { Action } from '@/state/actions'
 import { reducer } from '@/state/reducers'
+import { City } from '@models/City'
 
 export interface StateContext {
   weatherForecast: WeatherI
-  selectedCity: {name: string, country: string}
+  selectedCity: City
 }
 
 const defaultState = {
@@ -22,7 +23,10 @@ const defaultState = {
   },
   selectedCity: {
     name: '',
-    country: ''
+    country: '',
+    state: '',
+    lat: '',
+    lon: ''
   }
 }
 export function useStateContext<SelectorOutput>(

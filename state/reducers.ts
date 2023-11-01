@@ -6,7 +6,7 @@ export function reducer(state: StateContext, action: Action) {
     case ActionType.SET_CITIES_WEATHER:
       return { ...state, weatherForecast: action.payload }
     case ActionType.SELECT_CITY:
-      return { ...state, selectedCity: action.payload }
+      return { ...state, selectedCity: { ...state.selectedCity, ...action.payload } }
     default:
       return state
   }

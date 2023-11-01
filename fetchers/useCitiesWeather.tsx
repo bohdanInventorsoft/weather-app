@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useStateContext } from '@/state/store'
 import { ActionType } from '@/state/actions'
-import WeatherService from '@services/WeatherService'
+import WeatherService from '@services/weather'
 import { useHistory } from '@/contexts/HistoryProvider'
 
 const useCitiesWeather = () => {
@@ -11,14 +11,19 @@ const useCitiesWeather = () => {
     if (!selectedCity.name) {
       return;
     }
-    const resp = await WeatherService.getCitiesWeather(selectedCity.name, selectedCity.country);
-    add(selectedCity.name, {
-      id: selectedCity.name,
-      city: selectedCity.name,
-      country: selectedCity.country,
-      timestamp: Date.now(),
-    });
-    dispatch({ type: ActionType.SET_CITIES_WEATHER, payload: resp });
+    const resp = await WeatherService.getCitiesWeather(selectedCity);
+    if(resp?.status === 200) {
+      const data = await resp.json()
+      add(selectedCity.name, {
+        id: selectedCity.name,
+        city: selectedCity,
+        country: selectedCity.country,
+        timestamp: Date.now(),
+      });
+      dispatch({ type: ActionType.SET_CITIES_WEATHER, payload: data });
+      return
+    }
+    alert(resp.statusText)
   };
   useEffect(() => {
     if (selectedCity) {
