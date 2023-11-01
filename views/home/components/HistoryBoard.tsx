@@ -11,7 +11,7 @@ import Card from '@ui/Card'
 import { HistoryEntry } from '@models/History'
 
 export const HistoryBoard = () => {
-  const { history, removedHistory, remove, undoRemove } = useHistory()
+  const { history, removedHistory } = useHistory()
 
   const list = useMemo(() => {
     return [...history, ...removedHistory].sort((a, b) => {

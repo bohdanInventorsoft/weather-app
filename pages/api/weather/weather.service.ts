@@ -20,7 +20,6 @@ export const getCitiesWeather = async ({ name, country, state}:{ country: string
         weather: data.weather[0].main,
         weatherIcon: data.weather[0].icon,
       }
-
       return { status: 200, body: serialized }
     }
     return { status: resp.status, statusText: resp.statusText}

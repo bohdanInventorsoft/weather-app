@@ -16,7 +16,7 @@ export default async function handler(req: any, res: any) {
       const response = await _apiReducer(post)
       res
         .status(response.status && response?.body ? 200 : response.status)
-        .send(response.status && typeof response?.body !== undefined ? response?.body : response?.message)
+        .send(response.status && typeof response?.body !== undefined ? response?.body : response?.statusText)
     } else {
       res.status(404).send('Not found')
     }
@@ -31,5 +31,5 @@ const _apiReducer = async (post: any): Promise<ApiResponse> => {
       return await weatherReducer.pass(post)
   }
 
-  return { status: 400, message: 'Wrong route' }
+  return { status: 400, statusText: 'Wrong route' }
 }

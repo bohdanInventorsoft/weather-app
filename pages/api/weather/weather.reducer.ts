@@ -11,7 +11,7 @@ export enum WeatherActions {
 export class WeatherReducer extends ApiReducer<WeatherActions> {
   public async pass(post: ApiRequestI<WeatherActions>): Promise<ApiResponse> {
     if (!this.isValid(post)) {
-      return { status: 400, message: 'Invalid request' }
+      return { status: 400, statusText: 'Invalid request' }
     }
     const payload = post.payload
 

@@ -5,13 +5,11 @@ import Typo from '@ui/Typo'
 import WeatherService from '@services/weather'
 import { Input } from '@ui/Input'
 import Card from '@ui/Card'
-import { useHistory } from '@contexts/HistoryProvider'
 export const CityInput = ({ onChange }: { onChange: (val:City) => void }) => {
   const [search, setSearch] = useState('')
   const [citiesList, setCities] = useState<Array<City>>([])
   const [loading, setLoading] = useState(false)
   const [show, setShow] = useState(false)
-  const { history, removedHistory} = useHistory()
   const ref = useRef(null)
   useClickAway(ref, () => {
     setShow(false)

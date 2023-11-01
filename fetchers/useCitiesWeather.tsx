@@ -3,6 +3,7 @@ import { useStateContext } from '@/state/store'
 import { ActionType } from '@/state/actions'
 import WeatherService from '@services/weather'
 import { useHistory } from '@/contexts/HistoryProvider'
+import { toast } from 'react-toastify'
 
 const useCitiesWeather = () => {
   const [selectedCity, dispatch] = useStateContext((store) => store.selectedCity);
@@ -23,7 +24,7 @@ const useCitiesWeather = () => {
       dispatch({ type: ActionType.SET_CITIES_WEATHER, payload: data });
       return
     }
-    alert(resp.statusText)
+    toast.error(resp.status === 404 ? 'Cities weather not found' : resp.statusText)
   };
   useEffect(() => {
     if (selectedCity) {

@@ -18,14 +18,11 @@ export class ApiRequest implements ApiRequestI<string> {
   }
 }
 
-export type ApiResponse = { status: number; body?: any; message?: string }
+export type ApiResponse = { status: number; body?: any; statusText?: string }
 
 export class ApiReducer<Actions> {
   protected isValid(post: ApiRequestI<Actions>) {
     const { action } = post
-    if (!action) {
-      return false
-    }
-    return true
+    return action;
   }
 }
